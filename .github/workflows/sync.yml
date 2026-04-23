@@ -2,10 +2,10 @@ name: Sync OApp Index
 
 on:
   schedule:
-    # Every 15 minutes. GitHub Actions silently rate-limits cron faster
+    # Every 5 minutes — GitHub Actions silently rate-limits cron faster
     # than 5 min. We don't need real-time — adapters that sent a packet
-    # in the last cycle become resolvable within ≤15 min.
-    - cron: '*/15 * * * *'
+    # in the last cycle become resolvable within ≤5 min (≤15 min with peak-time skip).
+    - cron: '*/5 * * * *'
   workflow_dispatch: {}
 
 # Avoid overlapping runs if a previous one is slow.

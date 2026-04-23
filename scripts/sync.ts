@@ -31,7 +31,7 @@ import {
 } from './lib/scanner.js'
 
 const REDIS_KEY_PREFIX = 'oapp-index:'
-const MAX_BLOCKS_PER_RUN = 50_000
+const MAX_BLOCKS_PER_RUN = 200_000
 const MAX_SECONDS_PER_CHAIN = 60
 const INITIAL_LOOKBACK_BLOCKS = 5_000
 const RPC_PROBE_TIMEOUT_MS = 8_000

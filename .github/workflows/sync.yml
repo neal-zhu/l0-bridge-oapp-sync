@@ -1,0 +1,33 @@
+name: Sync OApp Index
+
+on:
+  schedule:
+    # Every 15 minutes. GitHub Actions silently rate-limits cron faster
+    # than 5 min. We don't need real-time — adapters that sent a packet
+    # in the last cycle become resolvable within ≤15 min.
+    - cron: '*/15 * * * *'
+  workflow_dispatch: {}
+
+# Avoid overlapping runs if a previous one is slow.
+concurrency:
+  group: sync-oapp-index
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - run: npm install --no-audit --no-fund
+
+      - name: Run sync
+        env:
+          KV_REST_API_REDIS_URL: ${{ secrets.KV_REST_API_REDIS_URL }}
+        run: npx tsx scripts/sync.ts

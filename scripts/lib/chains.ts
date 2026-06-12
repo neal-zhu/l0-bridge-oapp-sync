@@ -33,6 +33,9 @@ export const TIER_A_CHAINS: ChainTarget[] = [
     eid: 30102, chainId: 56, chainKey: 'bsc',
     endpointV2: '0x1a44076050125825900e736c501f859c50fE728c',
     rpcUrls: [
+      // publicnode first — the dataseed nodes reject eth_getLogs, which is
+      // all this sync does.
+      'https://bsc-rpc.publicnode.com',
       'https://bsc-dataseed.bnbchain.org',
       'https://bsc-dataseed1.defibit.io',
       'https://bsc-dataseed1.ninicoin.io',

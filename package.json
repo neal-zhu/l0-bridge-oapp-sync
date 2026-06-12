@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "GitHub Actions cron that syncs the LayerZero V2 OApp index for l0-bridge.",
+  "description": "GitHub Actions cron that syncs the LayerZero V2 OApp index and the Hyperlane Warp Route index for l0-bridge.",
   "scripts": {
-    "sync": "tsx scripts/sync.ts"
+    "sync": "tsx scripts/sync.ts",
+    "sync:hyperlane": "tsx scripts/syncHyperlane.ts"
   },
   "engines": {
     "node": ">=20"

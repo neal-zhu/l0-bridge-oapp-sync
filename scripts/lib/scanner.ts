@@ -68,6 +68,10 @@ function withTimeout<T>(p: Promise<T>, ms: number, label: string): Promise<T> {
 }
 
 export interface ScanRangeOptions {
+  /** Event topic0 to scan. Defaults to LayerZero PacketSent. */
+  topic?: string
+  /** Sender extractor for a matched log. Defaults to PacketSent decoding. */
+  extractSender?: (log: { data: string; topics: readonly string[] }) => string | null
   endpoint: string
   fromBlock: number
   toBlock: number
@@ -126,7 +130,7 @@ export async function scanPacketSentRange(
       const logs = await withTimeout(
         provider.getLogs({
           address: endpoint,
-          topics: [PACKET_SENT_TOPIC],
+          topics: [opts.topic ?? PACKET_SENT_TOPIC],
           fromBlock: from,
           toBlock: cursorEnd,
         }),
@@ -135,7 +139,7 @@ export async function scanPacketSentRange(
       )
       totalLogs += logs.length
       for (const l of logs) {
-        const s = extractSenderFromPacketSent(l)
+        const s = (opts.extractSender ?? extractSenderFromPacketSent)(l)
         if (s) senders.add(s)
       }
       onProgress(

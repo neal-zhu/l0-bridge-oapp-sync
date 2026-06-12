@@ -31,3 +31,9 @@ jobs:
         env:
           KV_REST_API_REDIS_URL: ${{ secrets.KV_REST_API_REDIS_URL }}
         run: npx tsx scripts/sync.ts
+
+      - name: Run Hyperlane sync
+        if: always()
+        env:
+          KV_REST_API_REDIS_URL: ${{ secrets.KV_REST_API_REDIS_URL }}
+        run: npx tsx scripts/syncHyperlane.ts
